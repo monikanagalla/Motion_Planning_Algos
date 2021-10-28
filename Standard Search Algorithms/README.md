@@ -1,36 +1,58 @@
-# RBE 550 - Standard Search Algorithms Implementation
+# Standard Search Algorithms Implementation
 
 ## Overview
 
-In this assignment, you are going to implement **PRM**, **RRT** and **RRT*** algorithms. For **PRM**, you are required to implement 4 different sampling methods - **uniform sampling**, **random sampling**, **gaussian sampling** and **bridge sampling**. These three algorithms are the basic ones for sampling-based planning. This template is provided to you as a start point. After you finish coding, you would be able to run these algorithms to find a path in a map, and visualize the result.
+In this repo, the implementation of **PRM**, **RRT** and **RRT*** algorithms can be found. For **PRM**, 4 different sampling methods - **uniform sampling**, **random sampling**, **gaussian sampling** and **bridge sampling** are implemented. These three algorithms are the basic ones for sampling-based planning. Use your own map in the form of **.jpg** or **.png** as an input and scale it according to the visualization requirements. 
 
 Files included:
 
-**PRM.py** is the file where you will implement a PRM class with four different sampling methods.
+**PRM.py**  file contains the PRM class with four different sampling methods as mentioned above.
 
-**RRT.py** is the file where you will implement a RRT class for RRT and RRT*.
+**RRT.py** file contains the RRT class with functions RRT and RRT*.
 
-**main.py** is the scrip that provides helper functions that load the map from an image and call the classes and functions from **PRM.py** and **RRT.py**. You are not required to modify anything but you are encouraged to understand the code.
+**main.py** is the scrip that provides helper function **load_map** to load the map from an image. Then executes the classes and functions from **PRM.py** and **RRT.py** over the generated map.
 
-**WPI_map.jpg** is a binary WPI map image with school buildings. You could replace it with some other maps you prefer.
+**WPI_map.jpg** is a binary WPI map image with school buildings. You could replace it with some other maps you prefer. Make sure the map image is in form of **.jpg** or **.png**.
 
-## Instruction
+**Note:** Please keep in mind that, the coordinate system used here is **[row, col]**, which is different from [x, y] in Cartesian coordinates. In README and the code comment, when the word '**point**' is used, it refers to a simple list [row, col]. When the word '**node**' or '**vertex**' is used, it refers to either the Node class in RRT ,or a node/vertex in a graph in PRM. 
 
-Before starting any coding, please run the code first:
 
-`python main.py`
+## Libraries used 
 
-The **main.py** loads the map image **WPI_map.jpg** and calls classes and functions to run planning tasks. As you haven't written anything yet, there should be no path shown in the graph, but only the map image, start point and end point.
+matplotlib
+numpy
+Bresenham
+scipy
+Networkx
 
-Please keep in mind that, the coordinate system used here is **[row, col]**, which is different from [x, y] in Cartesian coordinates. In README and the code comment, when the word '**point**' is used, it refers to a simple list [row, col]. When the word '**node**' or '**vertex**' is used, it refers to either the Node class in RRT ,or a node/vertex in a graph in PRM. 
+## Instructions
 
----
+Run `python main.py`
+After you finish coding, your algorithms should produce similar results as the images in **results** folder. Similar to the ones provided below.
 
+## Results
+<p align = "center">
+    <img src = "./results/bridge.png">
+    <br>
+</p>
+
+<p align = "center">
+    <img src = "./results/RRT_star.png">
+    <br>
+</p>
+
+<p align = "center">
+    <img src = "./results/RRT.png">
+    <br>
+</p>
+
+<!--
 ### PRM
 
 The two main phases of PRM are **Learning Phase** and **Query Phase**. 
 
 You would code **Learning Phase** in the function `sample`, where it samples points in the map according to different strategy, and connect these points to build a graph. In this template, the graph library [Networkx](https://networkx.org/documentation/stable/) is used to store the result graph. 
+
 
 There are four different sampling methods to be implemented - `uniform_sample`, `random_sample`, `gaussian_sample` and `bridge_sample`. Please refer to the lectures and make sure you understand the ideas behind these sampling methods before coding. 
 
@@ -66,43 +88,6 @@ Until now, I hope you have a basic understanding of the template code and what t
 
 As before, this template is only provided as a start point, feel free to make any modification of the codes or code structures if needed.
 
-After you finish coding, your algorithms should produce similar results as the images in **demo** folder.
+-->
 
-## Rubrics
-
-- (3 pts) Your PRM is implemented correctly
-
-  - Four sampling methods produce the correct sampling points
-  - Connect the sampling points into a graph using a proper method
-  
-  - Given start and goal, find a path if feasible.
-  
-  ---
-- (3 pts) Your RRT and RRT* are implemented correctly
-
-  - Get proper new nodes in each step
-  - Connect and rewire (RRT*) new nodes
-  - Find a path if feasible
-
-  ---
-
-- (1 pts) Documentation
-
-  Besides the code, you should also include a documentation with the following content:
-
-  - Briefly answer the following questions
-
-    - For PRM, what are the advantages and disadvantages of the four sampling methods in comparison to each other?
-    - For RRT, what is the main difference between RRT and RRT*? What change does it make in terms of the efficiency of the algorithms and optimality of the search result?
-    - Comparing between PRM and RRT, what are the advantages and disadvantages?
-    
-  - Algorithm results and explanation
-    
-    Run your code with `python main.py` and **save your results as png files**. Briefly explain why your algorithms would produce these results. Why RRT and RRT* result in different trees? How different sampling methods lead to different sample sets in the graph?
-    
-  - Reference paper and resources if any
-  
-  Include the documentation as a pdf file, or if you prefer, a md file.
-  
-  
 

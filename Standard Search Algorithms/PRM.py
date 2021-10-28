@@ -30,7 +30,6 @@ class PRM:
         return:
             True if there are obstacles between two points
         '''
-        ### YOUR CODE HERE ###
         pts=list(bresenham(p1[0], p1[1], p2[0], p2[1]))
         coll=False
         for p in pts:
@@ -49,7 +48,6 @@ class PRM:
         return:
             euclidean distance between two points
         '''
-        ### YOUR CODE HERE ###
         #print(np.array((point1[0],point1[1])) )
         #print( np.array(point2[0],point2[1]))
         weight= np.linalg.norm(np.array((point1[0],point1[1])) - np.array((point2[0],point2[1])))
@@ -69,8 +67,6 @@ class PRM:
         '''
         # Initialize graph
         self.graph.clear()
-
-        ### YOUR CODE HERE ###
         #self.samples.append((0, 0))
         '''
         We want our samples to be equally spaced in image. Therefore we first calculate sqrt(n_pts) since our image is a 2D image, take this as step_len. 
@@ -105,8 +101,6 @@ class PRM:
         '''
         # Initialize graph
         self.graph.clear()
-
-        ### YOUR CODE HERE ###
         #self.samples.append((0, 0))
         '''Here we just choose random points as samples. 
          We use random.randint function of numpy python to generate random samples in range(#rows,#cols).'''
@@ -130,8 +124,6 @@ class PRM:
         '''
         # Initialize graph
         self.graph.clear()
-
-        ### YOUR CODE HERE ###
         #self.samples.append((0, 0))
         '''First generate random samples of length n_pts then select a point from this set and take a guassian sample of this point.
         Check if both the points are either in free space or in collision. If so then drop the points.
@@ -169,8 +161,6 @@ class PRM:
         '''
         # Initialize graph
         self.graph.clear()
-
-        ### YOUR CODE HERE ###
         #self.samples.append((0, 0))
         '''
         This is more like gaussian sampling except that the updation condition is different. 
@@ -256,7 +246,6 @@ class PRM:
         elif sampling_method == "bridge":
             self.bridge_sample(n_pts)
 
-        ### YOUR CODE HERE ###
         pairs = []
         pairs_val=[]
         r = 20
@@ -328,8 +317,6 @@ class PRM:
         self.samples.append(goal)
         # start and goal id will be 'start' and 'goal' instead of some integer
         self.graph.add_nodes_from(['start', 'goal'])
-
-        ### YOUR CODE HERE ###
 
         # Find the pairs of points that need to be connected
         # and compute their distance/weight.

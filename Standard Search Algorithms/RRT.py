@@ -46,7 +46,6 @@ class RRT:
         return:
             euclidean distance between two nodes
         '''
-        ### YOUR CODE HERE ###
         weight= np.linalg.norm(np.array((node1.row,node1.col)) - np.array((node2.row,node2.col)))        
         return weight
 
@@ -60,7 +59,6 @@ class RRT:
         return:
             True if the new node is valid to be connected
         '''
-        ### YOUR CODE HERE ###
         pts=list(bresenham(node1.row, node1.col, node2.row, node2.col))
         coll=False
         for p in pts:
@@ -77,7 +75,6 @@ class RRT:
         return:
             point - the new point
         '''
-        ### YOUR CODE HERE ###
         rows=self.size_row
         cols=self.size_col
         if goal_bias==1:
@@ -96,7 +93,6 @@ class RRT:
         return:
             the nearest node
         '''
-        ### YOUR CODE HERE ###
         weights=[]
         for j in range(np.size(self.vertices)):
             #print(j)
@@ -129,7 +125,6 @@ class RRT:
         return:
             neighbors - a list of neighbors that are within the neighbor distance 
         '''
-        ### YOUR CODE HERE ###
         neighbours=[]
         for i in range(len(self.vertices)):
             expand_node=self.vertices[i]
@@ -151,7 +146,6 @@ class RRT:
         Rewire the new node if connecting to a new neighbor node will give least cost.
         Rewire all the other neighbor nodes.
         '''
-        ### YOUR CODE HERE ###
         costs=[]
         free_neighbours=[]
         for i in range(len(neighbors)):
@@ -219,8 +213,6 @@ class RRT:
         '''
         # Remove previous result
         self.init_map()
-
-        ### YOUR CODE HERE ###
         goal_bias=0.05
         step=10
         #rows=self.size_row
@@ -292,8 +284,6 @@ class RRT:
         '''
         # Remove previous result
         self.init_map()
-
-        ### YOUR CODE HERE ###
 
         # In each step,
         # get a new point, 
