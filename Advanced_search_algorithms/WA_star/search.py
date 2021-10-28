@@ -3,10 +3,9 @@
 def st_goal(start,goal):
     if start==goal:
        return True
-'''
+
 def cost(n_r,n_c,start):
     return abs(n_r-start[0])+abs(n_c-start[1])
-'''
 
 
 def cost_tot_fun(rr,cc,start,goal,parent):
@@ -21,6 +20,273 @@ def actualCost(index,start,parentNode):
         cost = cost + 1
         current = parentNode[current[0]][current[1]]
     return cost
+
+def bfs(grid, start, goal):
+    '''Return a path found by BFS alogirhm 
+       and the number of steps it takes to find it.
+
+    arguments:
+    grid - A nested list with datatype int. 0 represents free space while 1 is obstacle.
+           e.g. a 3x3 2D map: [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
+    start - The start node in the map. e.g. [0, 0]
+    goal -  The goal node in the map. e.g. [2, 2]
+
+    return:
+    path -  A nested list that represents coordinates of each step (including start and goal node), 
+            with data type int. e.g. [[0, 0], [0, 1], [0, 2], [1, 2], [2, 2]]
+    steps - Number of steps it takes to find the final solution, 
+            i.e. the number of nodes visited before finding a path (including start and goal node)
+
+    >>> from main import load_map
+    >>> grid, start, goal = load_map('test_map.csv')
+    >>> bfs_path, bfs_steps = bfs(grid, start, goal)
+    It takes 10 steps to find a path using BFS
+    >>> bfs_path
+    [[0, 0], [1, 0], [2, 0], [3, 0], [3, 1]]
+    '''
+    path = []
+    steps = 0
+    found = False  #initially no goal reached
+    R=C=len(grid)  #imagining the grid is square
+
+    # nodes queue that maintains the node information
+    nodes=[]
+    # queue that maintains all the visited nodes
+    visited=[]
+
+    # direction vectors for up,right,down and left of row and column
+    d_r=[0,1,0,-1]  
+    d_c=[1,0,-1,0]
+
+    nodes.append(start)
+    visited.append(start)
+    # queue that maintains the parent node information for backtracking of path. Size is equal to number of nodes
+    parent=[[None for i in range(R)]for j in range(C)]
+    parent[start[0]][start[1]]=[0,0]
+
+    if st_goal(start,goal):
+       found=True
+       print("That was easy! goal is same as start")
+
+    while len(nodes)>0:
+        [row,col]=nodes.pop(0)
+        steps+=1
+        if [row,col]==goal:
+           found=True
+           break
+  
+        for i in range(len(d_r)):
+           n_row=row+d_r[i]
+           n_col=col+d_c[i]
+           #boundary conditions check
+           if n_row<0 or n_col<0: continue
+           if n_row>= R or n_col >=C: continue
+           ##visited node check
+           if [n_row,n_col] in visited: continue
+           #obstacle check
+           if grid[n_row][n_col] ==1: continue
+           nodes.append([n_row,n_col])
+           visited.append([n_row,n_col])
+           parent[n_row][n_col]=[row,col]
+           if [n_row,n_col]== goal:
+              found=True
+              break
+    if found:
+       path.append(goal)
+       parent_pr=parent[goal[0]][goal[1]]
+       path.append(parent_pr)
+       while parent_pr != start:
+           parent_pr=parent[parent_pr[0]][parent_pr[1]]    #backtracking path through parents
+           path.append(parent_pr)
+       path.reverse()
+    if found:
+        print(f"It takes {steps} steps to find a path using BFS")
+    else:
+        print("No path found")
+    return path, steps
+
+
+def dfs(grid, start, goal):
+    '''Return a path found by DFS alogirhm 
+       and the number of steps it takes to find it.
+
+    arguments:
+    grid - A nested list with datatype int. 0 represents free space while 1 is obstacle.
+           e.g. a 3x3 2D map: [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
+    start - The start node in the map. e.g. [0, 0]
+    goal -  The goal node in the map. e.g. [2, 2]
+
+    return:
+    path -  A nested list that represents coordinates of each step (including start and goal node), 
+            with data type int. e.g. [[0, 0], [0, 1], [0, 2], [1, 2], [2, 2]]
+    steps - Number of steps it takes to find the final solution, 
+            i.e. the number of nodes visited before finding a path (including start and goal node)
+
+    >>> from main import load_map
+    >>> grid, start, goal = load_map('test_map.csv')
+    >>> dfs_path, dfs_steps = dfs(grid, start, goal)
+    It takes 9 steps to find a path using DFS
+    >>> dfs_path
+    [[0, 0], [0, 1], [0, 2], [1, 2], [2, 2], [2, 3], [3, 3], [3, 2], [3, 1]]
+    '''
+
+    path = []
+    steps = 0
+    found = False  #initially no goal reached
+    R=C=len(grid)  #imagining the grid is square
+
+    # nodes queue that maintains the node information
+    nodes=[]
+    # queue that maintains all the visited nodes
+    visited=[]
+
+    # direction vectors for up,right,down and left of row and column
+    #d_r=[0,1,0,-1]
+    d_r=[-1,0,1,0]  
+    #d_c=[1,0,-1,0]
+    d_c=[0,-1,0,1]
+
+    nodes.append(start)
+    visited.append(start)
+    # queue that maintains the parent node information for backtracking of path. Size is equal to number of nodes
+    parent=[[None for i in range(R)]for j in range(C)]
+    parent[start[0]][start[1]]=[0,0]
+
+    if st_goal(start,goal):
+       found=True
+       print("That was easy! goal is same as start")
+
+    while len(nodes)>0:
+        [row,col]=nodes.pop()
+        steps+=1
+        if [row,col]==goal:
+           found=True
+           break
+  
+        for i in range(len(d_r)):
+           n_row=row+d_r[i]
+           n_col=col+d_c[i]
+           #boundary conditions check
+           if n_row<0 or n_col<0: continue
+           if n_row>= R or n_col >=C: continue
+           ##visited node check
+           if [n_row,n_col] in visited: continue
+           #obstacle check
+           if grid[n_row][n_col] ==1: continue
+           nodes.append([n_row,n_col])
+           visited.append([n_row,n_col])
+           parent[n_row][n_col]=[row,col]
+           if [n_row,n_col]== goal:
+              found=True
+              break
+    if found:
+       path.append(goal)
+       parent_pr=parent[goal[0]][goal[1]]
+       path.append(parent_pr)
+       while parent_pr != start:
+           parent_pr=parent[parent_pr[0]][parent_pr[1]]   # backtracking path through parents
+           path.append(parent_pr)
+       path.reverse()
+
+    if found:
+        print(f"It takes {steps} steps to find a path using DFS")
+    else:
+        print("No path found")
+    return path, steps
+
+
+
+
+
+def dijkstra(grid, start, goal):
+    '''Return a path found by Dijkstra alogirhm 
+       and the number of steps it takes to find it.
+
+    arguments:
+    grid - A nested list with datatype int. 0 represents free space while 1 is obstacle.
+           e.g. a 3x3 2D map: [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
+    start - The start node in the map. e.g. [0, 0]
+    goal -  The goal node in the map. e.g. [2, 2]
+
+    return:
+    path -  A nested list that represents coordinates of each step (including start and goal node), 
+            with data type int. e.g. [[0, 0], [0, 1], [0, 2], [1, 2], [2, 2]]
+    steps - Number of steps it takes to find the final solution, 
+            i.e. the number of nodes visited before finding a path (including start and goal node)
+
+    >>> from main import load_map
+    >>> grid, start, goal = load_map('test_map.csv')
+    >>> dij_path, dij_steps = dijkstra(grid, start, goal)
+    It takes 10 steps to find a path using Dijkstra
+    >>> dij_path
+    [[0, 0], [1, 0], [2, 0], [3, 0], [3, 1]]
+    '''
+    path = []
+    steps = 0
+    found = False  #initially no goal reached
+    R=C=len(grid)  #imagining the grid is square
+
+    #define cost function and a cost queue to save all the cost values and node coordinates correspondingly
+    cost_to_go=0
+    cost_fun_queue=[[cost_to_go,start[0],start[1]]]
+
+    # queue that maintains all the visited nodes
+    visited=[]
+
+    # direction vectors for up,right,down and left of row and column
+    d_r=[0,1,0,-1]  
+    d_c=[1,0,-1,0]
+
+
+    visited.append(start)
+    # queue that maintains the parent node information for backtracking of path. Size is equal to number of nodes
+    parent=[[None for i in range(R)]for j in range(C)]
+    parent[start[0]][start[1]]=[0,0]
+
+    if st_goal(start,goal):
+       found=True
+       print("That was easy! goal is same as start")
+
+    while len(cost_fun_queue)>0:
+        cost_fun_queue.sort()
+        [cost_to_go,row,col]=cost_fun_queue.pop(0)
+        steps+=1
+
+        if [row,col]==goal:
+           found=True
+           break
+  
+        for i in range(len(d_r)):
+           n_row=row+d_r[i]
+           n_col=col+d_c[i]
+           #boundary conditions check
+           if n_row<0 or n_col<0: continue
+           if n_row>= R or n_col >=C: continue
+           ##visited node check
+           if [n_row,n_col] in visited: continue
+           #obstacle check
+           if grid[n_row][n_col] ==1: continue
+           cost_fun_queue.append([cost(n_row,n_col,start),n_row,n_col])
+           visited.append([n_row,n_col])
+           parent[n_row][n_col]=[row,col]
+           if [n_row,n_col]== goal:
+              found=True
+              break
+    if found:
+       path.append(goal)
+       parent_pr=parent[goal[0]][goal[1]]
+       path.append(parent_pr)
+       while parent_pr != start:
+           parent_pr=parent[parent_pr[0]][parent_pr[1]]     #backtracking path through parents
+           path.append(parent_pr)
+       path.reverse()
+
+    if found:
+        print(f"It takes {steps} steps to find a path using Dijkstra")
+    else:
+        print("No path found")
+    return path, steps
+
 
 def astar(grid, start, goal):
     '''Return a path found by A* alogirhm 
@@ -45,7 +311,6 @@ def astar(grid, start, goal):
     >>> astar_path
     [[0, 0], [1, 0], [2, 0], [3, 0], [3, 1]]
     '''
-    ### YOUR CODE HERE ###
     path = []
     steps = 0
     found = False  #initially no goal reached

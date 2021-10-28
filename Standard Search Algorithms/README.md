@@ -18,12 +18,13 @@ Files included:
 
 
 ## Libraries used 
+Following are the python libraries that have to be installed.
 
-matplotlib
-numpy
-Bresenham
-scipy
-Networkx
+1. `matplotlib`
+2. `numpy`
+3. `Bresenham`
+4. `scipy`
+5. `Networkx`
 
 ## Instructions
 

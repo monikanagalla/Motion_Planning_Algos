@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 import csv
 
-from search import astar
+from search import astar, bfs, dfs, dijkstra
 
 
 # Load map, start and goal point.
@@ -58,14 +58,14 @@ if __name__ == "__main__":
     grid, start, goal = load_map('map.csv')
 
     # Search
-    #bfs_path, bfs_steps = bfs(grid, start, goal)
-    #dfs_path, dfs_steps = dfs(grid, start, goal)
-    #dij_path, dij_steps = dijkstra(grid, start, goal)
+    bfs_path, bfs_steps = bfs(grid, start, goal)
+    dfs_path, dfs_steps = dfs(grid, start, goal)
+    dij_path, dij_steps = dijkstra(grid, start, goal)
     aster_path, aster_steps = astar(grid, start, goal)
 
     # Show result
-    #draw_path(grid, bfs_path, 'BFS')
-    #draw_path(grid, dfs_path, 'DFS')
-    #draw_path(grid, dij_path, 'Dijkstra')
+    draw_path(grid, bfs_path, 'BFS')
+    draw_path(grid, dfs_path, 'DFS')
+    draw_path(grid, dij_path, 'Dijkstra')
     draw_path(grid, aster_path, 'A*')
     plt.show()
